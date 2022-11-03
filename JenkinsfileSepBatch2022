@@ -1,6 +1,6 @@
 node{
 
-def mavenHome = tool name: "maven3.8.5"
+def mavenHome = tool name: "maven3.8.6"
 
 echo "Build number: ${env.BUILD_NUMBER}" 
 //echo "Job name is: ${env.JOB_NAME}"
@@ -12,7 +12,7 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKe
 try{
 sendslacknotifications("STARTED")
 stage('CheckoutCode'){
-git branch: 'development', credentialsId: 'd282f55b-fad5-4318-87d4-7ae8a1bf92b2', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
+git branch: 'development', credentialsId: '562f28a2-fff5-4d51-af6d-99ec822940c2', url: 'https://github.com/koteswar-naidu/maven-web-application.git'
 }
 
 stage('Build'){
@@ -30,8 +30,8 @@ sh "${mavenHome}/bin/mvn deploy"
 }
 
 stage('DeployAppIntoTomcatServer'){
-sshagent(['edb68cd9-21f4-4bb5-a6ae-2bd936f65b53']) {
-  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.16.144:/opt/apache-tomcat-9.0.68/webapps/"  
+sshagent(['ea6ca974-220d-4c37-a3c9-df1b56087d46']) {
+  sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.12.154:/opt/apache-tomcat-9.0.68/webapps/"  
 }
 }
 */
